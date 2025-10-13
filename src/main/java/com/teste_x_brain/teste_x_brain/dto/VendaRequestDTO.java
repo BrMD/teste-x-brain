@@ -1,4 +1,4 @@
-package dto;
+package com.teste_x_brain.teste_x_brain.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

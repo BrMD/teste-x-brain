@@ -1,8 +1,7 @@
-package repository;
+package com.teste_x_brain.teste_x_brain.repository;
 
-import model.Venda;
+import com.teste_x_brain.teste_x_brain.model.Venda;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 

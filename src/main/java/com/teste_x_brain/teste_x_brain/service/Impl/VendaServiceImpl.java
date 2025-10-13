@@ -1,16 +1,16 @@
-package service.Impl;
+package com.teste_x_brain.teste_x_brain.service.Impl;
 
-import dto.VendaRequestDTO;
-import dto.VendaResponseDTO;
-import dto.VendedorResumoResponseDTO;
-import dto.mappers.VendaMapper;
-import model.Venda;
-import model.Vendedor;
+import com.teste_x_brain.teste_x_brain.dto.VendaRequestDTO;
+import com.teste_x_brain.teste_x_brain.dto.VendaResponseDTO;
+import com.teste_x_brain.teste_x_brain.dto.VendedorResumoResponseDTO;
+import com.teste_x_brain.teste_x_brain.dto.mappers.VendaMapper;
+import com.teste_x_brain.teste_x_brain.model.Venda;
+import com.teste_x_brain.teste_x_brain.model.Vendedor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repository.VendaRepository;
-import repository.VendedorRepository;
-import service.interfaces.VendaInterface;
+import com.teste_x_brain.teste_x_brain.repository.VendaRepository;
+import com.teste_x_brain.teste_x_brain.repository.VendedorRepository;
+import com.teste_x_brain.teste_x_brain.service.interfaces.VendaInterface;
 
 import java.time.LocalDate;
 import java.util.List;

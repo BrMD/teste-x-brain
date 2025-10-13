@@ -1,4 +1,4 @@
-package model;
+package com.teste_x_brain.teste_x_brain.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,10 +1,12 @@
-package dto.mappers;
+package com.teste_x_brain.teste_x_brain.dto.mappers;
 
-import dto.VendaRequestDTO;
-import dto.VendaResponseDTO;
-import model.Venda;
-import model.Vendedor;
+import com.teste_x_brain.teste_x_brain.dto.VendaRequestDTO;
+import com.teste_x_brain.teste_x_brain.dto.VendaResponseDTO;
+import com.teste_x_brain.teste_x_brain.model.Venda;
+import com.teste_x_brain.teste_x_brain.model.Vendedor;
+import org.springframework.stereotype.Component;
 
+@Component
 public class VendaMapper {
     public VendaResponseDTO toDto(Venda venda){
         if(venda==null) return null;
