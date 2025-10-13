@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -17,12 +18,18 @@ public class Venda {
     private UUID id;
 
     @Column(name = "dataVenda", nullable = false)
-    private LocalDateTime dataVenda;
+    private LocalDate dataVenda;
 
     @Column(name = "valorVenda", nullable = false)
     private BigDecimal valor;
 
     @ManyToOne
-    @JoinColumn(name = "vendedor_id")
+    @JoinColumn(name = "vendedor_id", nullable = false)
     private Vendedor vendedor;
+
+    public Venda(LocalDate dataVenda, BigDecimal valor, Vendedor vendedor) {
+        this.dataVenda = dataVenda;
+        this.valor = valor;
+        this.vendedor = vendedor;
+    }
 }
