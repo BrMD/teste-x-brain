@@ -1,5 +1,6 @@
 package com.teste_x_brain.teste_x_brain.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 public class VendaRequestDTO {
+    @JsonFormat(pattern = "dd-MM-yyyy")
     @NotNull(message = "Data não pode ser nulo")
     private LocalDate dataVenda;
 
