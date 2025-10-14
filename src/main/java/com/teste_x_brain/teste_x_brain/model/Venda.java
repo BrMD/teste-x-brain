@@ -3,6 +3,7 @@ package com.teste_x_brain.teste_x_brain.model;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.util.UUID;
 @Data
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 public class Venda {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

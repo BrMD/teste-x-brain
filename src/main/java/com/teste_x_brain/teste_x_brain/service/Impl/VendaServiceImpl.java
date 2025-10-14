@@ -13,9 +13,14 @@ import com.teste_x_brain.teste_x_brain.repository.VendaRepository;
 import com.teste_x_brain.teste_x_brain.repository.VendedorRepository;
 import com.teste_x_brain.teste_x_brain.service.interfaces.VendaInterface;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -41,8 +46,22 @@ public class VendaServiceImpl implements VendaInterface {
 
     @Override
     public List<VendedorResumoResponseDTO> listarVendas(LocalDate inicio, LocalDate fim) {
-        //TODO fazer implementação
-        return List.of();
+        log.info("query findallVendas");
+        List<Venda> listaVendas = vendaRepository.findAllByDataVendaBetween(inicio,fim);
+        log.info("fim query findallVendas");
+
+        Map<Long, List<Venda>> vendasSorted = listaVendas.stream().collect(Collectors.groupingBy(venda -> venda.getVendedor().getId()));
+
+        return vendasSorted.values().stream().map(vendas -> {
+
+            String nome = vendas.getFirst().getVendedor().getNome();
+            Long id = vendas.getFirst().getVendedor().getId();
+            Optional<BigDecimal> valorTotalDeVendasOptional = vendas.stream().map(Venda::getValor).reduce((valor, acc) -> acc.add(valor));
+            Long totalDias = ChronoUnit.DAYS.between(inicio,fim);
+            return valorTotalDeVendasOptional.map(bigDecimal ->
+                    new VendedorResumoResponseDTO(id, nome, bigDecimal, bigDecimal.divide(new BigDecimal(totalDias),RoundingMode.HALF_UP))).
+                    orElseGet(() -> new VendedorResumoResponseDTO(id, nome, new BigDecimal(0), new BigDecimal(0)));
+        }).toList();
     }
 
     public Vendedor findVendedor(Long id, String nome){
