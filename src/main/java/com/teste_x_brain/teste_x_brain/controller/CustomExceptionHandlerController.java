@@ -3,6 +3,7 @@ package com.teste_x_brain.teste_x_brain.controller;
 import com.teste_x_brain.teste_x_brain.exceptions.ApiErrorMessage;
 import com.teste_x_brain.teste_x_brain.exceptions.DataInvalidaException;
 import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -20,31 +21,31 @@ public class CustomExceptionHandlerController {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorMessage> handleValidationErrors(MethodArgumentNotValidException ex){
         List<String> errors = ex.getBindingResult().getFieldErrors().stream().map(FieldError::getDefaultMessage).toList();
-        ApiErrorMessage apiErrorMessage = new ApiErrorMessage(HttpStatusCode.valueOf(400), errors);
+        ApiErrorMessage apiErrorMessage = new ApiErrorMessage(HttpStatus.BAD_REQUEST, errors);
         return ResponseEntity.status(apiErrorMessage.getStatus()).body(apiErrorMessage);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ApiErrorMessage> handleExceptionDateError(){
-        ApiErrorMessage apiErrorMessage = new ApiErrorMessage(HttpStatusCode.valueOf(400), "Favor inserir uma data valida dia-mes-ano(dd-MM-yyyy)");
+        ApiErrorMessage apiErrorMessage = new ApiErrorMessage(HttpStatus.BAD_REQUEST, "Favor inserir uma data valida dia-mes-ano(dd-MM-yyyy)");
         return ResponseEntity.status(apiErrorMessage.getStatus()).body(apiErrorMessage);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ApiErrorMessage> handleExceptionRequestParamError(){
-        ApiErrorMessage apiErrorMessage = new ApiErrorMessage(HttpStatusCode.valueOf(400), "Favor inserir uma url valida exemplo: http://localhost:8080/api/vendas?inicio=dd-MM-yyyy&fim=dd-MM-yyyy)");
+        ApiErrorMessage apiErrorMessage = new ApiErrorMessage(HttpStatus.BAD_REQUEST, "Favor inserir uma url valida exemplo: http://localhost:8080/api/vendas?inicio=dd-MM-yyyy&fim=dd-MM-yyyy)");
         return ResponseEntity.status(apiErrorMessage.getStatus()).body(apiErrorMessage);
     }
 
     @ExceptionHandler(DataInvalidaException.class)
     public ResponseEntity<ApiErrorMessage> handleDataInvalidaError(DataInvalidaException ex){
-        ApiErrorMessage apiErrorMessage = new ApiErrorMessage(HttpStatusCode.valueOf(400), ex.getMessage());
+        ApiErrorMessage apiErrorMessage = new ApiErrorMessage(HttpStatus.BAD_REQUEST, ex.getMessage());
         return ResponseEntity.status(apiErrorMessage.getStatus()).body(apiErrorMessage);
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<ApiErrorMessage> handleDataNullError(MissingServletRequestParameterException ex){
-        ApiErrorMessage apiErrorMessage = new ApiErrorMessage(HttpStatusCode.valueOf(400), ex.getParameterName() + " Não pode ser nulo");
+        ApiErrorMessage apiErrorMessage = new ApiErrorMessage(HttpStatus.BAD_REQUEST, ex.getParameterName() + " Não pode ser nulo");
         return ResponseEntity.status(apiErrorMessage.getStatus()).body(apiErrorMessage);
     }
 }
