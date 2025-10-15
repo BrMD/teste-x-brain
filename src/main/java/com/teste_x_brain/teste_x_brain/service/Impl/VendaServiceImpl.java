@@ -58,6 +58,7 @@ public class VendaServiceImpl implements VendaInterface {
             Long id = vendas.getFirst().getVendedor().getId();
             Optional<BigDecimal> valorTotalDeVendasOptional = vendas.stream().map(Venda::getValor).reduce((valor, acc) -> acc.add(valor));
             Long totalDias = ChronoUnit.DAYS.between(inicio,fim);
+
             return valorTotalDeVendasOptional.map(bigDecimal ->
                     new VendedorResumoResponseDTO(id, nome, bigDecimal, bigDecimal.divide(new BigDecimal(totalDias),RoundingMode.HALF_UP))).
                     orElseGet(() -> new VendedorResumoResponseDTO(id, nome, new BigDecimal(0), new BigDecimal(0)));
