@@ -77,7 +77,7 @@ class VendaServiceImplTest {
         when(vendedorRepository.findById(1L)).thenReturn(Optional.empty());
         when(vendedorRepository.save(any(Vendedor.class))).thenReturn(vendedor);
 
-        Vendedor result = vendaService.findVendedor(1L, "Matheus");
+        Vendedor result = vendaService.findVendedorOrCreate(1L, "Matheus");
 
         assertEquals("Matheus", result.getNome());
         verify(vendedorRepository, times(1)).save(any(Vendedor.class));
@@ -90,7 +90,7 @@ class VendaServiceImplTest {
     void deveRetornarVendedorExistente() {
         when(vendedorRepository.findById(1L)).thenReturn(Optional.of(vendedor));
 
-        Vendedor result = vendaService.findVendedor(1L, "Matheus");
+        Vendedor result = vendaService.findVendedorOrCreate(1L, "Matheus");
 
         assertEquals(vendedor, result);
         verify(vendedorRepository, never()).save(any());
