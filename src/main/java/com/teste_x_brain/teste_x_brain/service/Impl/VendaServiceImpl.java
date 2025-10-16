@@ -74,14 +74,14 @@ public class VendaServiceImpl implements VendaInterface {
             log.debug("[{}] VendedorID: {} VendedorNome: {}", "Listar Vendas",id,nome);
 
             log.debug("[{}] Inicio da soma total de vendas com reduce das vendas do vendedor", "Listar Vendas");
-            Optional<BigDecimal> valorTotalDeVendasOptional = vendas.stream().map(Venda::getValor).reduce((valor, acc) -> acc.add(valor));
+            BigDecimal valorTotalDeVendas = vendas.stream()
+                    .map(Venda::getValor)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
             Long totalDias = ChronoUnit.DAYS.between(inicio,fim);
 
             log.info("[{}] Informacoes a serem retornadas do vendedor, ID:{}, Nome:{}, TotalDeVendas:{}, MediaDiaria:{}", "Listar Vendas",
-                    id, nome, valorTotalDeVendasOptional.get(),valorTotalDeVendasOptional.get().divide(new BigDecimal(totalDias), RoundingMode.HALF_UP));
-            return valorTotalDeVendasOptional.map(bigDecimal ->
-                    new VendedorResumoResponseDTO(id, nome, bigDecimal, bigDecimal.divide(new BigDecimal(totalDias),RoundingMode.HALF_UP))).
-                    orElseGet(() -> new VendedorResumoResponseDTO(id, nome, new BigDecimal(0), new BigDecimal(0)));
+                    id, nome, valorTotalDeVendas,valorTotalDeVendas.divide(new BigDecimal(totalDias), RoundingMode.HALF_UP));
+            return new VendedorResumoResponseDTO(id, nome, valorTotalDeVendas, valorTotalDeVendas.divide(new BigDecimal(totalDias), RoundingMode.HALF_UP));
         }).toList();
     }
 
